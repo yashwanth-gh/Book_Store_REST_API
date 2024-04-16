@@ -86,7 +86,6 @@ out
 .nuxt
 dist
 
-<<<<<<< HEAD
 # Gatsby files
 .cache/
 # Comment in the public line in if your project uses Gatsby and not Next.js
@@ -119,17 +118,3 @@ dist
 .pnp.*
 
 # End of https://mrkandreev.name/snippets/gitignore-generator/#Node
-=======
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-.env
-*.env
->>>>>>> af9572e436c9edd6396b8a46df8da273d653076c
