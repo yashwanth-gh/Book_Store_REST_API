@@ -102,5 +102,5 @@ export const tokens = {
         fontSize: 10,
         color: tokens.grey[700],
       },
-    },
+    }
   };
