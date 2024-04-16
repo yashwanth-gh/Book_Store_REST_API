@@ -6,6 +6,7 @@ declare module "@mui/material/styles/createPalette" {
     [key: number]: string;
   }
 
+
   interface Palette {
     tertiary: PaletteColor;
   }
