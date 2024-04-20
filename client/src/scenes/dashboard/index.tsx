@@ -3,6 +3,7 @@ import { Box } from "@mui/material";
 import Row1 from "./Row1";
 import Row2 from "./Row2";
 import Row3 from "./Row3";
+import { useGetKpisQuery } from "@/state/api";
 
 const gridTemplateLargeScreens = `
 "a b c"
@@ -50,10 +51,33 @@ const gridTemplateSmallScreens = `
 "j"
 `;
 
-
 const Dashboard = () => {
   const isAboveMediumScreens = useMediaQuery("(min-width: 1200px)");
   const { palette } = useTheme();
+
+  const { data: kpiData, isLoading, isError } = useGetKpisQuery();
+
+  if (isLoading)
+    return (
+      <Box
+        width={"100%"}
+        height={"100%"}
+        display={"flex"}
+        justifyContent={"center"}
+        alignItems={"center"}
+        sx={{ color: palette.secondary[400] }}
+      >
+        <h2>Loading Data...</h2>
+      </Box>
+    );
+
+  if (isError || !kpiData?.data)
+    return (
+      <Box width={"100%"} height={"100%"} sx={{ color: palette.error.dark }}>
+        <h2>ERROR: there was no data received from API</h2>
+        <p>Plese try again!</p>
+      </Box>
+    );
 
   return (
     <Box
@@ -75,9 +99,9 @@ const Dashboard = () => {
             }
       }
     >
-      <Row1 />
-      <Row2 />
-      <Row3 />
+      <Row1 data={kpiData?.data} />
+      <Row2 data={kpiData?.data} />
+      <Row3 data={kpiData?.data} />
     </Box>
   );
 };

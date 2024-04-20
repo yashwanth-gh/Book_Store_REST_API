@@ -1,8 +1,11 @@
 import DashboardBox from "@/components/DashboardBox";
+import { Data } from "@/state/types";
 
-type Props = {};
+interface IRow1Props{
+  data:Data[];
+}
 
-const Row2 = (props: Props) => {
+const Row2 = ({data}:IRow1Props) => {
   return (
     <>
       <DashboardBox gridArea={"d"}></DashboardBox>
