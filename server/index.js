@@ -7,7 +7,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import { DB_NAME, conf } from "./config.js";
 import KPI from "./models/KPI.js";
-import { kpis } from "./data/data.js";
+import { kpis, products } from "./data/data.js";
 
 /* CONFIGURATIONS */
 const app = express();
@@ -21,8 +21,11 @@ app.use(cors());
 
 // routes
 import kpiRouter from "./routes/kpi.js";
-
 app.use("/kpi", kpiRouter);
+
+import productRouter from "./routes/product.js";
+import Product from "./models/Product.js";
+app.use("/product", productRouter);
 
 const PORT = process.env.PORT || 9000;
 
@@ -47,15 +50,17 @@ DB_CONNECT()
       console.log("Server running on port -->", port);
     });
   })
-  // .then(async () => {
-  //   /* ADD DATA ONE TIME ONLY OR AS NEEDED */
-  //   try {
-  //     await mongoose.connection.dropDatabase()
-  //     await KPI.insertMany(kpis);
-  //   } catch (error) {
-  //     console.log("drop and insertion error",error);
-  //   }
-  // })
+  .then(async () => {
+    /* ADD DATA ONE TIME ONLY OR AS NEEDED */
+    try {
+      /* //! Dont uncomment these added data and run them */
+      //! await mongoose.connection.dropDatabase()
+      //! await KPI.insertMany(kpis);
+      //! await Product.insertMany(products);
+    } catch (error) {
+      console.log("drop and insertion error",error);
+    }
+  })
   .catch((error) => {
     console.log("ERROR :: DB_CONNECT catch :: MongoDB connection failed!");
   });

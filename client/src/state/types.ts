@@ -40,3 +40,18 @@ export interface ApiResponseKPIData {
     success: boolean;
     data: Data[];
 }
+export interface ApiResponseProductData {
+    success: boolean;
+    data: ProductData[];
+}
+
+export interface ProductData{
+    _id: string;
+    price:number;
+    expense:number;
+    transactionId:string[];
+    __v: number;
+    createdAt: string;
+    updatedAt: string;
+    id: string;
+}

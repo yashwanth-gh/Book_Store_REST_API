@@ -19,31 +19,31 @@ import {
 } from "recharts";
 
 interface IRow1Props {
-  data: Data[];
+  kpiData: Data[];
 }
 
-const Row1 = ({ data }: IRow1Props) => {
+const Row1 = ({ kpiData }: IRow1Props) => {
   const { palette } = useTheme();
 
   const revenueExpenses = useMemo(() => {
-    return data[0].monthlyData.map((item) => {
+    return kpiData[0].monthlyData.map((item) => {
       return {
         name: item.month.substring(0, 3),
         revenue: item.revenue,
         expenses: item.expenses,
       };
     });
-  }, [data]);
+  }, [kpiData]);
 
   const revenueProfit = useMemo(() => {
-    return data[0].monthlyData.map((item) => {
+    return kpiData[0].monthlyData.map((item) => {
       return {
         name: item.month.substring(0, 3),
         revenue: item.revenue,
         profit: (item.revenue - item.expenses).toFixed(2),
       };
     });
-  }, [data]);
+  }, [kpiData]);
 
   return (
     <>

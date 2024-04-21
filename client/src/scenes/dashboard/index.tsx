@@ -3,9 +3,10 @@ import { Box } from "@mui/material";
 import Row1 from "./Row1";
 import Row2 from "./Row2";
 import Row3 from "./Row3";
-import { useGetKpisQuery } from "@/state/api";
+import { useGetKpisQuery, useGetProductsQuery } from "@/state/api";
+import SkeletonLoader from "@/components/SkeletonLoader";
 
-const gridTemplateLargeScreens = `
+export const gridTemplateLargeScreens = `
 "a b c"
 "a b c"
 "a b c"
@@ -18,7 +19,7 @@ const gridTemplateLargeScreens = `
 "g h j"
   `;
 
-const gridTemplateSmallScreens = `
+export const gridTemplateSmallScreens = `
 "a"
 "a"
 "a"
@@ -55,23 +56,20 @@ const Dashboard = () => {
   const isAboveMediumScreens = useMediaQuery("(min-width: 1200px)");
   const { palette } = useTheme();
 
-  const { data: kpiData, isLoading, isError } = useGetKpisQuery();
+  const {
+    data: kpiData,
+    isLoading: isKpiDataLoading,
+    isError: isKpiDataError,
+  } = useGetKpisQuery();
+  const {
+    data: productsData,
+    isLoading: isLoadingProducts,
+    isError: isErrorProducts,
+  } = useGetProductsQuery();
 
-  if (isLoading)
-    return (
-      <Box
-        width={"100%"}
-        height={"100%"}
-        display={"flex"}
-        justifyContent={"center"}
-        alignItems={"center"}
-        sx={{ color: palette.secondary[400] }}
-      >
-        <h2>Loading Data...</h2>
-      </Box>
-    );
+  if (isKpiDataLoading || isLoadingProducts) return <SkeletonLoader />;
 
-  if (isError || !kpiData?.data)
+  if (isKpiDataError || isErrorProducts || !kpiData?.data || !productsData?.data)
     return (
       <Box width={"100%"} height={"100%"} sx={{ color: palette.error.dark }}>
         <h2>ERROR: there was no data received from API</h2>
@@ -99,8 +97,8 @@ const Dashboard = () => {
             }
       }
     >
-      <Row1 data={kpiData?.data} />
-      <Row2 data={kpiData?.data} />
+      <Row1 kpiData={kpiData?.data} />
+      <Row2 kpiData={kpiData?.data} productData={productsData?.data} />
       <Row3 data={kpiData?.data} />
     </Box>
   );
