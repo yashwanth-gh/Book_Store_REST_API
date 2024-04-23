@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import Row1 from "./Row1";
 import Row2 from "./Row2";
 import Row3 from "./Row3";
-import { useGetKpisQuery, useGetProductsQuery } from "@/state/api";
+import { useGetKpisQuery, useGetProductsQuery, useGetTransactionQuery } from "@/state/api";
 import SkeletonLoader from "@/components/SkeletonLoader";
 
 export const gridTemplateLargeScreens = `
@@ -61,15 +61,29 @@ const Dashboard = () => {
     isLoading: isKpiDataLoading,
     isError: isKpiDataError,
   } = useGetKpisQuery();
+
   const {
     data: productsData,
     isLoading: isLoadingProducts,
     isError: isErrorProducts,
   } = useGetProductsQuery();
 
-  if (isKpiDataLoading || isLoadingProducts) return <SkeletonLoader />;
+  const {
+    data: transactionsData,
+    isLoading: isLoadingTransactions,
+    isError: isErrorTransactions,
+  } = useGetTransactionQuery();
 
-  if (isKpiDataError || isErrorProducts || !kpiData?.data || !productsData?.data)
+  if (isKpiDataLoading || isLoadingProducts || isLoadingTransactions) return <SkeletonLoader />;
+
+  if (
+    isKpiDataError ||
+    isErrorProducts ||
+    isErrorTransactions ||
+    !kpiData?.data ||
+    !productsData?.data ||
+    !transactionsData?.data
+  )
     return (
       <Box width={"100%"} height={"100%"} sx={{ color: palette.error.dark }}>
         <h2>ERROR: there was no data received from API</h2>
@@ -99,7 +113,7 @@ const Dashboard = () => {
     >
       <Row1 kpiData={kpiData?.data} />
       <Row2 kpiData={kpiData?.data} productData={productsData?.data} />
-      <Row3 data={kpiData?.data} />
+      <Row3 kpiData={kpiData?.data} productData={productsData?.data} transactionData={transactionsData?.data} />
     </Box>
   );
 };

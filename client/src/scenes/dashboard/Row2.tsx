@@ -64,7 +64,7 @@ const Row2 = ({ kpiData, productData }: IRow2Props) => {
           }
           rightText={"+1.76%"}
         />
-        <ResponsiveContainer width={"100%"} height={"100%"}>
+        <ResponsiveContainer width={"100%"} height={"90%"}>
           <LineChart
             width={500}
             height={400}

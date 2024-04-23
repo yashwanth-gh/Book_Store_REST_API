@@ -132,7 +132,7 @@ const Row1 = ({ kpiData }: IRow1Props) => {
           }
           rightText={"+2.34%"}
         />
-        <ResponsiveContainer width={"100%"} height={"100%"}>
+        <ResponsiveContainer width={"100%"} height={"95%"}>
           <LineChart
             width={500}
             height={400}
@@ -163,12 +163,7 @@ const Row1 = ({ kpiData }: IRow1Props) => {
               axisLine={false}
               style={{ fontSize: "12px" }}
             />
-            <Legend
-              height={20}
-              wrapperStyle={{
-                margin: "0 0 10px 0",
-              }}
-            />
+
             <Line
               yAxisId={"left"}
               type="monotone"

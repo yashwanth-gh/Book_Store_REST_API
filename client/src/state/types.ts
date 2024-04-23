@@ -55,3 +55,19 @@ export interface ProductData{
     updatedAt: string;
     id: string;
 }
+
+export interface ApiResponseTransactionData {
+    success: boolean;
+    data: TransactionData[];
+}
+
+export interface TransactionData{
+    _id: string;
+    amount:number;
+    buyer:string;
+    productId:Array<string>;
+    __v: number;
+    createdAt: string;
+    updatedAt: string;
+    id: string;
+}

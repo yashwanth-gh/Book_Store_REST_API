@@ -6,8 +6,13 @@ import "dotenv/config";
 import helmet from "helmet";
 import morgan from "morgan";
 import { DB_NAME, conf } from "./config.js";
+import kpiRouter from "./routes/kpi.js";
+import productRouter from "./routes/product.js";
+import transactionRouter from "./routes/transaction.js";
+import { kpis, products, transactions } from "./data/data.js";
 import KPI from "./models/KPI.js";
-import { kpis, products } from "./data/data.js";
+import Product from "./models/Product.js";
+import Transaction from "./models/Transaction.js";
 
 /* CONFIGURATIONS */
 const app = express();
@@ -20,12 +25,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 // routes
-import kpiRouter from "./routes/kpi.js";
 app.use("/kpi", kpiRouter);
-
-import productRouter from "./routes/product.js";
-import Product from "./models/Product.js";
 app.use("/product", productRouter);
+app.use("/transaction", transactionRouter);
 
 const PORT = process.env.PORT || 9000;
 
@@ -57,6 +59,7 @@ DB_CONNECT()
       //! await mongoose.connection.dropDatabase()
       //! await KPI.insertMany(kpis);
       //! await Product.insertMany(products);
+      //! await Transaction.insertMany(transactions);
     } catch (error) {
       console.log("drop and insertion error",error);
     }
